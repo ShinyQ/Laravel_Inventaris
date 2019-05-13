@@ -110,6 +110,8 @@
         </form>
         <!-- Navigation -->
         <ul class="navbar-nav">
+
+          @if(Auth::user()->role == "admin")
           <li class="nav-item">
             <a class="nav-link" href="/kategori">
               <i class="ni ni-archive-2 text-primary"></i> Kategori Barang
@@ -140,6 +142,23 @@
               <i class="ni ni-curved-next text-pink"></i> Logout
             </a>
           </li>
+          @else
+          <li class="nav-item">
+            <a class="nav-link" href="/pinjam">
+              <i class="ni ni-basket text-purple"></i>Pinjam Barang
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/status">
+              <i class="ni ni-single-02 text-yellow"></i>Histori Peminjaman
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/doLogout">
+              <i class="ni ni-curved-next text-pink"></i>Logout
+            </a>
+          </li>
+          @endif
         </ul>
         <!-- Heading -->
       </div>

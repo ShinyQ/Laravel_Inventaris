@@ -17,7 +17,12 @@ class LoginController extends Controller
 
   public function index(){
    if (Auth::user()) {
-  		return redirect('/kategori');
+  		if(Auth::user()->role == "admin"){
+        return redirect('/kategori');
+      }
+      else{
+        return redirect('/pinjam');
+      }
   	} else {
   	   return view('auth.login');
   	}
@@ -38,7 +43,12 @@ class LoginController extends Controller
         return redirect()->back();
       }
       else{
+        if(Auth::user()->role == "admin"){
           return redirect('/kategori');
+        }
+        else{
+          return redirect('/pinjam');
+        }
       }
     }
 

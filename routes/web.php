@@ -44,3 +44,11 @@ Route::prefix('barang')->group(function(){
   Route::get('/{id}/edit','Admin\GoodsController@edit');
   Route::get('/{id}/delete','Admin\GoodsController@destroy');
 });
+
+Route::prefix('pinjam')->group(function(){
+  Route::get('/', 'User\PinjamController@index');
+  Route::post('/','User\PinjamController@store');
+  Route::post('/{id}/update','User\PinjamController@update');
+  Route::get('/{id}/edit','User\PinjamController@edit');
+  Route::get('/{id}/delete','User\PinjamController@destroy');
+});
