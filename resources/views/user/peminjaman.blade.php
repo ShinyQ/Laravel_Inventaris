@@ -61,6 +61,7 @@
                         </div>
                       </div>
                       @endif
+                      
                         <div class="col">
                             <h3 class="mb-0">Tambah Data Barang</h3><br />
                             <form action="/pinjam" method="POST">

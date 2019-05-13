@@ -24,6 +24,8 @@ Route::post('/doRegister', 'Auth\RegisterController@doRegister');
 Route::post('/doLogin', 'Auth\LoginController@doLogin');
 
 Route::get('/user/verify/{token}', 'Auth\RegisterController@verifyUser');
+Route::get('auth/{provider}', 'Auth\AuthController@redirectToProvider');
+Route::get('auth/{provider}/callback', 'Auth\AuthController@handleProviderCallback');
 
 Route::middleware("auth")->group(function() {
 

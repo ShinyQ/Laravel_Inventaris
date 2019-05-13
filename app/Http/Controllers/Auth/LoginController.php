@@ -42,15 +42,20 @@ class LoginController extends Controller
         Session::flash('message_gagal', 'Username Atau password Salah');
         return redirect()->back();
       }
-      else{
-        if(Auth::user()->role == "admin"){
+      elseif(Auth::user()->role == "admin"){
           return redirect('/kategori');
-        }
-        else{
-          return redirect('/pinjam');
-        }
       }
-    }
+      elseif(Auth::user()->role == "user" && Auth::user()->email_verified_at == NULL){
+            Session::flash('message_gagal', 'Email Varus Dikonfirmasi Terlebih Dahulu');
+            return redirect('/login');
+      }
+      else{
+          return redirect('/pinjam');
+      }
+
+   }
+
+
 
 
   public function login(Request $request)
@@ -86,7 +91,7 @@ class LoginController extends Controller
   public function logout()
   {
     Auth::logout();
-    return ApiBuilder::apiResponseSuccess('Anda berhasil logout', null, 200);
+    return ApiBuilder::apiResponseSuccess('Anda berhasil logout', [], 200);
   }
 
   public function doLogout()
