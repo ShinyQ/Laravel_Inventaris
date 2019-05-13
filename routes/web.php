@@ -15,4 +15,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', 'Admin\BarangController@index');
+Route::get('/kategori', 'Admin\CategoriesController@index');
