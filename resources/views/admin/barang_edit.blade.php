@@ -63,7 +63,7 @@
                       @endif
                         <div class="col">
                             <h3 class="mb-0">Edit Data Barang</h3><br />
-                            <form action="/barang/{{ $data->id }}/update" method="POST">
+                            <form action="/barang/{{ $data->id }}/update" method="POST" enctype="multipart/form-data">
                               @csrf
                                 <div class="row">
 
@@ -102,6 +102,24 @@
                                               <option value="{{$item->id}}">Rak {{$item->nomor}} Kode {{$item->kode}}</option>
                                             @endforeach
                                           </select>
+                                      </div>
+                                  </div>
+
+                                  <div class="col-lg-6">
+                                      <div class="form-group">
+                                          <label class="form-control-label" for="input-username">Foto Barang</label>
+                                          <input name="foto" type="file" id="input-username" class="form-control form-control-alternative" >
+                                      </div>
+                                  </div>
+
+                                  <div class="col-lg-6">
+                                      <div class="form-group">
+                                        <label class="form-control-label" for="input-username">Foto :</label><br />
+                                        @if ($data->foto)
+                                          <img src="{{asset('images')}}/{{ $data->foto }}" width="100px"/>
+                                        @else
+                                        Tidak Ada Gambar
+                                        @endif
                                       </div>
                                   </div>
 

@@ -13,7 +13,7 @@ class Goods extends Model
     protected $table = 'goods';
     use SoftDeletes;
     public $timestamps = true;
-    protected $fillable = ['name','categories_id','shelfs_id','stock','status'];
+    protected $fillable = ['name','categories_id','shelfs_id','stock','status','foto'];
 
     public function categories()
     {

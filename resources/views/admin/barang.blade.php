@@ -14,7 +14,9 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-search"></i></span>
                     </div>
-                    <input class="form-control" placeholder="Search" type="text">
+                    <form action="/barang" method="GET">
+                      <input class="form-control" type="text" name="search" value="{{ request()->get('search') }}" placeholder="Cari Barang...">
+                    </form>
                 </div>
             </div>
         </form>
@@ -63,7 +65,7 @@
                       @endif
                         <div class="col">
                             <h3 class="mb-0">Tambah Data Barang</h3><br />
-                            <form action="/barang" method="POST">
+                            <form action="/barang" method="POST" enctype="multipart/form-data">
                               @csrf
                                 <div class="row">
                                     <div class="col-lg-6">
@@ -104,6 +106,13 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-username">Foto Barang</label>
+                                            <input name="foto" type="file" id="input-username" class="form-control form-control-alternative" >
+                                        </div>
+                                    </div>
+
                                     <div class="col-lg-12 text-right">
                                         <input type="submit" class="btn btn-primary  pull-right" value="+ Tambah Data Barang" />
                                     </div>
@@ -131,11 +140,10 @@
                         <thead class="thead-light">
                             <tr>
                                 <th scope="col">No</th>
+                                <th scope="col">Foto</th>
                                 <th scope="col">Nama</th>
-                                <th scope="col">Kategori</th>
                                 <th scope="col">Letak Barang</th>
                                 <th scope="col">Stok</th>
-                                <th scope="col">Status</th>
                                 <th scope="col">Aksi</th>
                             </tr>
                         </thead>
@@ -143,11 +151,17 @@
                           @foreach ($good as $data)
                             <tr>
                                 <th scope="row">{{ $counter++ }}</th>
+                                <td>
+                                  @if ($data->foto)
+                                    <img src="{{asset('images')}}/{{ $data->foto }}" width="100px"/>
+                                  @else
+                                  Tidak Ada Gambar
+                                  @endif
+                                </td>
                                 <td>{{ $data->name }}</td>
-                                <td>{{ $data->categories->name }}</td>
                                 <td>Rak {{ $data->shelfs->nomor }} Kode {{ $data->shelfs->kode }}</td>
                                 <td>{{ $data->stock }}</td>
-                                <td>
+                                {{-- <td>
                                   @if($data->status == 1)
                                     <span class="badge badge-dot mr-4">
                                       <i class="bg-success"></i> Aktif
@@ -157,8 +171,9 @@
                                       <i class="bg-success"></i> Non-Aktif
                                     </span>
                                   @endif
-                                </td>
+                                </td> --}}
                                 <td>
+                                  <a class="btn btn-primary" href="/barang/{{$data->id}}">Detail</i></a>
                                   <a class="btn btn-warning" href="/barang/{{$data->id}}/edit">Edit</i></a>
                   								<a class="btn btn-danger" href="/barang/{{$data->id}}/delete">Delete</i></a>
                                 </td>
@@ -167,6 +182,11 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="col-md-12" style="margin:0; text-align:center;">
+              <center>
+                  {!! $good->appends(request()->all())->links() !!}
+              </center>
+              </div>
             </div>
         </div>
     @endsection

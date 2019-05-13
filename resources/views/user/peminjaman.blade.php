@@ -149,7 +149,7 @@
                                 </td>
                                 <td>
                                   {{-- <a class="btn btn-warning" href="/pinjam/{{$data->id}}/edit">Edit</i></a> --}}
-                  								<a class="btn btn-danger" href="/pinjam/{{$data->id}}/delete">Delete</i></a>
+                  								<a class="btn btn-danger" href="/pinjam/{{$data->id}}/delete">Batalkan</i></a>
                                 </td>
                             </tr>
                           @endforeach

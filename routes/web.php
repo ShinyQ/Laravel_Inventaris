@@ -42,6 +42,7 @@ Route::prefix('barang')->group(function(){
   Route::post('/','Admin\GoodsController@store');
   Route::post('/{id}/update','Admin\GoodsController@update');
   Route::get('/{id}/edit','Admin\GoodsController@edit');
+  Route::get('/{id}','Admin\GoodsController@show');
   Route::get('/{id}/delete','Admin\GoodsController@destroy');
 });
 

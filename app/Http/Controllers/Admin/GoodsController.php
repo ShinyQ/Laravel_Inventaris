@@ -21,7 +21,20 @@ class GoodsController extends Controller
       $counter = 1;
       $shelf = Shelfs::all();
       $category = Categories::all();
-      $good = Goods::all();
+      $good = Goods::query()->latest();
+
+      if (request()->has("search") && strlen(request()->query("search")) >= 1) {
+        $good->where(
+          "goods.name", "like", "%" . request()->query("search") . "%"
+        );
+      }
+
+      $pagination = 5;
+      $good = $good->paginate($pagination);
+      if( request()->has('page') && request()->get('page') > 1){
+        $counter += (request()->get('page')- 1) * $pagination;
+      }
+
       return view('admin.barang', compact('good','counter','shelf', 'category'));
     }
 
@@ -51,10 +64,19 @@ class GoodsController extends Controller
       ]);
 
       try{
-          $good = new Goods($request->except("_token"));
-          $good->status = '1';
-          $good->save();
-          //validasi pesan berhasil
+          if($request->foto){
+            $good = new Goods($request->except("_token"));
+            $imageName = time().'.'.request()->foto->getClientOriginalExtension();
+            request()->foto->move(public_path('images'), $imageName);
+            $good->foto = $imageName;
+            $good->status = '1';
+            $good->save();
+          }
+          else{
+            $good = new Goods($request->except("_token"));
+            $good->status = '1';
+            $good->save();
+          }
           $request->session()->flash('message','Berhasil Menambahkan Data');
           return redirect()->back();
 
@@ -73,7 +95,10 @@ class GoodsController extends Controller
      */
     public function show($id)
     {
-        //
+      $shelf = Shelfs::all();
+      $category = Categories::all();
+      $data = Goods::find($id);
+      return view('admin.barang_detail', compact('data','shelf','category'));
     }
 
     /**
@@ -109,11 +134,24 @@ class GoodsController extends Controller
       try{
         \DB::beginTransaction();
         $data = Goods::find($id);
-        $data->name = $request->name;
-        $data->stock = $request->stock;
-        $data->categories_id = $request->categories_id;
-        $data->shelfs_id = $request->shelfs_id;
-        $data->save();
+        if($request->foto){
+          $imageName = time().'.'.request()->foto->getClientOriginalExtension();
+          request()->foto->move(public_path('images'), $imageName);
+          $data->foto = $imageName;
+
+          $data->name = $request->name;
+          $data->stock = $request->stock;
+          $data->categories_id = $request->categories_id;
+          $data->shelfs_id = $request->shelfs_id;
+          $data->save();
+        }
+        else{
+          $data->name = $request->name;
+          $data->stock = $request->stock;
+          $data->categories_id = $request->categories_id;
+          $data->shelfs_id = $request->shelfs_id;
+          $data->save();
+        }
         \DB::commit();
         $request->session()->flash('message','Berhasil Update Data');
         return redirect()->back();
@@ -121,7 +159,7 @@ class GoodsController extends Controller
       catch (Exception $e) {
         report($e);
         \DB::rollBack();
-        $request->session()->flash('message_gagal','Data Sudah Ada');
+        $request->session()->flash('message_gagal','Kesalahan Edit Data');
         return redirect()->back();
       }
     }
