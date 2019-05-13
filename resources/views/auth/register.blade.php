@@ -44,7 +44,7 @@
                 </a>
               </div>
             </div>
-            <div class="card-body px-lg-5 py-lg-4">
+            <div class="card-body px-lg-6 py-lg-3">
               <div class="text-center text-muted mb-4">
                 <small>Or sign up with credentials</small>
               </div>

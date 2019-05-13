@@ -17,7 +17,8 @@ Route::get('/', function () {
 
 Route::get('/login', 'Auth\LoginController@index');
 Route::get('/register', 'Auth\RegisterController@index');
+Route::get('/doLogout', 'Auth\LoginController@doLogout');
 Route::post('/doRegister', 'Auth\RegisterController@doRegister');
-
+Route::post('/doLogin', 'Auth\LoginController@doLogin');
 
 Route::get('/kategori', 'Admin\CategoriesController@index');

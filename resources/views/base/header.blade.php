@@ -111,8 +111,8 @@
         <!-- Navigation -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="./index.html">
-              <i class="ni ni-tv-2 text-primary"></i> Dashboard
+            <a class="nav-link" href="/kategori">
+              <i class="ni ni-tv-2 text-primary"></i> Kategori
             </a>
           </li>
           <li class="nav-item">
@@ -136,7 +136,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="./examples/register.html">
+            <a class="nav-link" href="/doLogout">
               <i class="ni ni-curved-next text-pink"></i> Logout
             </a>
           </li>
