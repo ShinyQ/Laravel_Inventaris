@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class Helpers {
 
-    public static function apiRespond($code, $data) {
+    public static function apiRespond($code, $data, $message) {
         if($code == 200){
           $response['status'] = 200;
           $response['message'] = $message;
@@ -15,15 +15,15 @@ class Helpers {
         }elseif($code == 404){
           $response['status'] = 404;
           $response['message'] = $message;
-          $response['message'] = $data;
+          $response['data'] = $data;
         }elseif($code == 400){
           $response['status'] = 400;
           $response['message'] = $message;
-          $response['message'] = $data;
+          $response['data'] = $data;
         }
         else{
           $response['status'] = 500;
-          $response['message'] = $message;
+          $response['message'] = "An Error Has Occured";
           $response['data'] = $data;
         }
         return response()->json($response, $code);
