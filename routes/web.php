@@ -15,41 +15,49 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login', 'Auth\LoginController@index');
+Route::get('/test', 'Auth\RegisterController@test');
+
+Route::get('/login', 'Auth\LoginController@index')->name('login');
 Route::get('/register', 'Auth\RegisterController@index');
 Route::get('/doLogout', 'Auth\LoginController@doLogout');
 Route::post('/doRegister', 'Auth\RegisterController@doRegister');
 Route::post('/doLogin', 'Auth\LoginController@doLogin');
 
-Route::prefix('kategori')->group(function(){
-  Route::get('/', 'Admin\CategoriesController@index');
-  Route::post('/','Admin\CategoriesController@store');
-  Route::post('/{id}/update','Admin\CategoriesController@update');
-  Route::get('/{id}/edit','Admin\CategoriesController@edit');
-  Route::get('/{id}/delete','Admin\CategoriesController@destroy');
-});
+Route::get('/user/verify/{token}', 'Auth\RegisterController@verifyUser');
 
-Route::prefix('rak')->group(function(){
-  Route::get('/', 'Admin\ShelfsController@index');
-  Route::post('/','Admin\ShelfsController@store');
-  Route::post('/{id}/update','Admin\ShelfsController@update');
-  Route::get('/{id}/edit','Admin\ShelfsController@edit');
-  Route::get('/{id}/delete','Admin\ShelfsController@destroy');
-});
+Route::middleware("auth")->group(function() {
 
-Route::prefix('barang')->group(function(){
-  Route::get('/', 'Admin\GoodsController@index');
-  Route::post('/','Admin\GoodsController@store');
-  Route::post('/{id}/update','Admin\GoodsController@update');
-  Route::get('/{id}/edit','Admin\GoodsController@edit');
-  Route::get('/{id}','Admin\GoodsController@show');
-  Route::get('/{id}/delete','Admin\GoodsController@destroy');
-});
+  Route::prefix('kategori')->group(function(){
+    Route::get('/', 'Admin\CategoriesController@index');
+    Route::post('/','Admin\CategoriesController@store');
+    Route::post('/{id}/update','Admin\CategoriesController@update');
+    Route::get('/{id}/edit','Admin\CategoriesController@edit');
+    Route::get('/{id}/delete','Admin\CategoriesController@destroy');
+  });
 
-Route::prefix('pinjam')->group(function(){
-  Route::get('/', 'User\PinjamController@index');
-  Route::post('/','User\PinjamController@store');
-  Route::post('/{id}/update','User\PinjamController@update');
-  Route::get('/{id}/edit','User\PinjamController@edit');
-  Route::get('/{id}/delete','User\PinjamController@destroy');
+  Route::prefix('rak')->group(function(){
+    Route::get('/', 'Admin\ShelfsController@index');
+    Route::post('/','Admin\ShelfsController@store');
+    Route::post('/{id}/update','Admin\ShelfsController@update');
+    Route::get('/{id}/edit','Admin\ShelfsController@edit');
+    Route::get('/{id}/delete','Admin\ShelfsController@destroy');
+  });
+
+  Route::prefix('barang')->group(function(){
+    Route::get('/', 'Admin\GoodsController@index');
+    Route::post('/','Admin\GoodsController@store');
+    Route::post('/{id}/update','Admin\GoodsController@update');
+    Route::get('/{id}/edit','Admin\GoodsController@edit');
+    Route::get('/{id}','Admin\GoodsController@show');
+    Route::get('/{id}/delete','Admin\GoodsController@destroy');
+  });
+
+  Route::prefix('pinjam')->group(function(){
+    Route::get('/', 'User\PinjamController@index');
+    Route::post('/','User\PinjamController@store');
+    Route::post('/{id}/update','User\PinjamController@update');
+    Route::get('/{id}/edit','User\PinjamController@edit');
+    Route::get('/{id}/delete','User\PinjamController@destroy');
+  });
+
 });

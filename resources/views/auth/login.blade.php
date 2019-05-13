@@ -5,10 +5,9 @@
   <meta charset="utf-8">
   <title>Halaman Login</title>
   <!-- Favicon -->
-  <link href="{{url('assets/img/brand/favicon.png" rel="icon" type="image/png')}}">
-  <!-- Fonts -->
+  <link href="{{url('assets/img/brand/favicon.png')}}" rel="icon" type="image/png">
   <!-- Icons -->
-  <link href="{{url('assets/vendor/nucleo/css/nucleo.css" rel="stylesheet')}}">
+  <link href="{{url('assets/vendor/nucleo/css/nucleo.css')}}" rel="stylesheet">
   <link href="{{url('assets/vendor/@fortawesome/fontawesome-free/css/all.min.css')}}" rel="stylesheet">
   <!-- Argon CSS -->
   <link type="text/css" href="{{url('assets/css/argon.css?v=1.0.0')}}" rel="stylesheet">
@@ -28,33 +27,52 @@
     <!-- Page content -->
     <div class="container mt--9 pb-5">
       <div class="row justify-content-center">
-        <div class="col-lg-5 col-md-7">
+        <div class="col-lg-6 col-md-8">
           <div class="card bg-secondary shadow border-0">
             <div class="card-header bg-transparent pb-5">
+              @if ($errors->any())
+              <div class="col-sm-12">
+                <div class="alert alert-danger">
+                  @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                  @endforeach
+                </div>
+              </div>
+              @endif
+              @if (Session::has('message'))
+                <div class="col-sm-12">
+                  <div class="alert alert-success">
+                      {{ Session::get('message') }}
+                  </div>
+                </div>
+              @endif
+              @if (Session::has('message_gagal'))
+                <div class="col-sm-12">
+                  <div class="alert alert-danger">
+                      {{ Session::get('message_gagal') }}
+                  </div>
+                </div>
+              @endif
               <div class="text-muted text-center mt-2 mb-3"><small>Sign in with</small></div>
               <div class="btn-wrapper text-center">
-                <a href="#" class="btn btn-neutral btn-icon">
-                  <span class="btn-inner--icon"><img src="../assets/img/icons/common/github.svg"></span>
-                  <span class="btn-inner--text">Github</span>
-                </a>
                 <a href="#" class="btn btn-neutral btn-icon">
                   <span class="btn-inner--icon"><img src="../assets/img/icons/common/google.svg"></span>
                   <span class="btn-inner--text">Google</span>
                 </a>
               </div>
             </div>
-            <div class="card-body px-lg-5 py-lg-3">
+            <div class="card-body px-lg-6 py-lg-3">
               <div class="text-center text-muted mb-4">
                 <small>Or sign in with credentials</small>
               </div>
               <form role="form" action ="/doLogin" method="post">
                 @csrf
-                <div class="form-group mb-3">
-                  <div class="input-group input-group-alternative">
+                <div class="form-group">
+                  <div class="input-group input-group-alternative mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                     </div>
-                    <input class="form-control" name="email" placeholder="Email" type="email">
+                    <input name="email" class="form-control" placeholder="Email" type="email">
                   </div>
                 </div>
                 <div class="form-group">
@@ -62,7 +80,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                     </div>
-                    <input class="form-control" name="password" placeholder="Password" type="password">
+                    <input name="password" class="form-control" placeholder="Password" type="password">
                   </div>
                 </div>
                 <div class="text-center">

@@ -25,6 +25,11 @@ class RegisterController extends Controller
       }
     }
 
+    public function test($value='')
+    {
+      return view('auth.verifyUser');
+    }
+
     public function doRegister(Request $request)
     {
       $this->validate($request, [
@@ -38,11 +43,14 @@ class RegisterController extends Controller
         'email' => $request->email,
         'role' => 'user',
         'password' => Bcrypt($request->password),
+        'token' => str_random(40)
       ]);
-
-      Session::flash('sukses', 'Sukses Mendaftar Akun Silahkan, Cek Email Untuk Konfirmasi');
+      Mail::to($request->email)->send(new VerifyMail($user));
+      Session::flash('message', 'Sukses Mendaftar Akun Silahkan, Cek Email Untuk Konfirmasi');
       return redirect('/login');
     }
+
+
 
     public function register(Request $request)
     {
@@ -60,13 +68,35 @@ class RegisterController extends Controller
           'name' => $request->name,
           'email' => $request->email,
           'role' => 'user',
-          'password' => Bcrypt($request->password)
+          'password' => Bcrypt($request->password),
+          'token' => str_random(40)
       ]);
-
+      Mail::to($request->email)->send(new VerifyMail($user));
       $success['user'] = $user;
       $success['token'] = $user->createToken('myApp')->accessToken;
 
       return ApiBuilder::apiResponseSuccess('Register Sukses!', $success, 200);
     }
+
+    public function verifyUser($token)
+    {
+      $verifyUser = User::where('token', $token)->first();
+      if(isset($verifyUser) ){
+          if($verifyUser->email_verified_at == null) {
+              $time = Carbon::now();
+              $verifyUser->email_verified_at = $time;
+              $verifyUser->save();
+              Session::flash('message', 'Sukses Melakukan Konfirmasi, Silahkan Login');
+          }else{
+            Session::flash('message_gagal', 'Anda Sudah Mengkonfirmasi Akun');
+          }
+      }else{
+          Session::flash('message_gagal', 'Akun Tersebut Tidak Ditemukan');
+          return redirect('/login');
+      }
+
+      return redirect('/login');
+    }
+
 
 }

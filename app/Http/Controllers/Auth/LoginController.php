@@ -39,7 +39,7 @@ class LoginController extends Controller
         'email' => $request->email,
         'password' => $request->password
       ])){
-        Session::flash('gagal', 'Username Atau password Salah');
+        Session::flash('message_gagal', 'Username Atau password Salah');
         return redirect()->back();
       }
       else{
@@ -92,7 +92,7 @@ class LoginController extends Controller
   public function doLogout()
   {
     Auth::logout();
-    Session::flash('sukses', 'Sukses Keluar Akun');
+    Session::flash('message', 'Sukses Keluar Akun');
     return redirect('/login');
   }
 

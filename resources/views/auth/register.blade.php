@@ -32,6 +32,29 @@
         <div class="col-lg-6 col-md-8">
           <div class="card bg-secondary shadow border-0">
             <div class="card-header bg-transparent pb-5">
+              @if ($errors->any())
+              <div class="col-sm-12">
+                <div class="alert alert-danger">
+                  @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                  @endforeach
+                </div>
+              </div>
+              @endif
+              @if (Session::has('message'))
+                <div class="col-sm-12">
+                  <div class="alert alert-success">
+                      {{ Session::get('message') }}
+                  </div>
+                </div>
+              @endif
+              @if (Session::has('message_gagal'))
+                <div class="col-sm-12">
+                  <div class="alert alert-danger">
+                      {{ Session::get('message_gagal') }}
+                  </div>
+                </div>
+              @endif
               <div class="text-muted text-center mt-2 mb-4"><small>Sign up with</small></div>
               <div class="text-center">
                 <a href="#" class="btn btn-neutral btn-icon mr-4">
