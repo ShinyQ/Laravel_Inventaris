@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Goods;
 use App\Shelfs;
-use Session;
+use App\Categories;
+use Sessions;
 
-class ShelfsController extends Controller
+class GoodsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +20,9 @@ class ShelfsController extends Controller
     {
       $counter = 1;
       $shelf = Shelfs::all();
-      return view('admin.rak', compact('shelf','counter'));
+      $category = Categories::all();
+      $good = Goods::all();
+      return view('admin.barang', compact('good','counter','shelf', 'category'));
     }
 
     /**
@@ -40,16 +44,16 @@ class ShelfsController extends Controller
     public function store(Request $request)
     {
       $this->validate($request,[
-          'nomor' => 'required',
-          'kode' => 'required | unique:shelfs',
+          'name' => 'required | unique:goods',
+          'stock' => 'required | numeric',
+          'categories_id' => 'required',
+          'shelfs_id' => 'required',
       ]);
 
       try{
-          $data = new Shelfs;
-          $data->nomor = $request->nomor;
-          $data->kode = $request->kode;
-          $data->save();
-
+          $good = new Goods($request->except("_token"));
+          $good->status = '1';
+          $good->save();
           //validasi pesan berhasil
           $request->session()->flash('message','Berhasil Menambahkan Data');
           return redirect()->back();
@@ -80,8 +84,10 @@ class ShelfsController extends Controller
      */
     public function edit($id)
     {
-      $data = Shelfs::find($id);
-      return view('admin.rak_edit', compact('data'));
+      $shelf = Shelfs::all();
+      $category = Categories::all();
+      $data = Goods::find($id);
+      return view('admin.barang_edit', compact('data','shelf','category'));
     }
 
     /**
@@ -94,15 +100,19 @@ class ShelfsController extends Controller
     public function update(Request $request, $id)
     {
       $this->validate($request,[
-        'nomor' => 'required',
-        'kode' => 'required'
+          'name' => 'required',
+          'stock' => 'required | numeric',
+          'categories_id' => 'required',
+          'shelfs_id' => 'required',
       ]);
 
       try{
         \DB::beginTransaction();
-        $data = Shelfs::find($id);
-        $data->nomor = $request->nomor;
-        $data->kode = $request->kode;
+        $data = Goods::find($id);
+        $data->name = $request->name;
+        $data->stock = $request->stock;
+        $data->categories_id = $request->categories_id;
+        $data->shelfs_id = $request->shelfs_id;
         $data->save();
         \DB::commit();
         $request->session()->flash('message','Berhasil Update Data');
@@ -124,7 +134,7 @@ class ShelfsController extends Controller
      */
     public function destroy($id)
     {
-      $data = Shelfs::find($id);
+      $data = Goods::find($id);
       $data->delete();
       if($data) {
           Session::flash('message','Berhasil menghapus Data');

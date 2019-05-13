@@ -36,3 +36,11 @@ Route::prefix('rak')->group(function(){
   Route::get('/{id}/edit','Admin\ShelfsController@edit');
   Route::get('/{id}/delete','Admin\ShelfsController@destroy');
 });
+
+Route::prefix('barang')->group(function(){
+  Route::get('/', 'Admin\GoodsController@index');
+  Route::post('/','Admin\GoodsController@store');
+  Route::post('/{id}/update','Admin\GoodsController@update');
+  Route::get('/{id}/edit','Admin\GoodsController@edit');
+  Route::get('/{id}/delete','Admin\GoodsController@destroy');
+});
