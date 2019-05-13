@@ -112,27 +112,27 @@
         <ul class="navbar-nav">
           <li class="nav-item">
             <a class="nav-link" href="/kategori">
-              <i class="ni ni-tv-2 text-primary"></i> Kategori
+              <i class="ni ni-archive-2 text-primary"></i> Kategori Barang
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="./examples/icons.html">
-              <i class="ni ni-planet text-blue"></i> Icons
+            <a class="nav-link" href="/rak">
+              <i class="ni ni-bullet-list-67 text-green"></i> Rak Barang
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="./examples/maps.html">
-              <i class="ni ni-pin-3 text-orange"></i> Maps
+            <a class="nav-link" href="/barang">
+              <i class="ni ni-bag-17 text-orange"></i> Data Barang
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="./examples/profile.html">
-              <i class="ni ni-single-02 text-yellow"></i> User profile
+            <a class="nav-link" href="/peminjaman">
+              <i class="ni ni-basket text-purple"></i>Izin Peminjaman
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="./examples/tables.html">
-              <i class="ni ni-bullet-list-67 text-red"></i> Tables
+            <a class="nav-link" href="/status">
+              <i class="ni ni-single-02 text-yellow"></i>Status Peminjaman
             </a>
           </li>
           <li class="nav-item">

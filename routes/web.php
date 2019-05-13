@@ -21,12 +21,18 @@ Route::get('/doLogout', 'Auth\LoginController@doLogout');
 Route::post('/doRegister', 'Auth\RegisterController@doRegister');
 Route::post('/doLogin', 'Auth\LoginController@doLogin');
 
-Route::get('/kategori', 'Admin\CategoriesController@index');
-
 Route::prefix('kategori')->group(function(){
   Route::get('/', 'Admin\CategoriesController@index');
   Route::post('/','Admin\CategoriesController@store');
   Route::post('/{id}/update','Admin\CategoriesController@update');
   Route::get('/{id}/edit','Admin\CategoriesController@edit');
   Route::get('/{id}/delete','Admin\CategoriesController@destroy');
+});
+
+Route::prefix('rak')->group(function(){
+  Route::get('/', 'Admin\ShelfsController@index');
+  Route::post('/','Admin\ShelfsController@store');
+  Route::post('/{id}/update','Admin\ShelfsController@update');
+  Route::get('/{id}/edit','Admin\ShelfsController@edit');
+  Route::get('/{id}/delete','Admin\ShelfsController@destroy');
 });

@@ -4,11 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Categories;
-use Validator;
+use App\Shelfs;
 use Session;
 
-class CategoriesController extends Controller
+class ShelfsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +16,9 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $counter = 1;
-        $category = Categories::all();
-        return view('admin.kategori', compact('category','counter'));
+      $counter = 1;
+      $shelf = Shelfs::all();
+      return view('admin.rak', compact('shelf','counter'));
     }
 
     /**
@@ -41,20 +40,23 @@ class CategoriesController extends Controller
     public function store(Request $request)
     {
       $this->validate($request,[
-          'name' => 'required | unique:categories',
+          'nomor' => 'required | unique:shelfs',
+          'kode' => 'required',
       ]);
 
       try{
-          $data = new Categories;
-          $data->name = $request->name;
+          $data = new Shelfs;
+          $data->nomor = $request->nomor;
+          $data->kode = $request->kode;
           $data->save();
+
           //validasi pesan berhasil
           $request->session()->flash('message','Berhasil Menambahkan Data');
           return redirect()->back();
 
       }catch (Exception $e) {
           report($e);
-          $request->session()->flash('message_gagal','Data Kategori Sudah Ada');
+          $request->session()->flash('message_gagal','Data Rak Sudah Ada');
           return redirect()->back();
       }
     }
@@ -78,8 +80,8 @@ class CategoriesController extends Controller
      */
     public function edit($id)
     {
-      $data = Categories::find($id);
-      return view('admin/kategori_edit', compact('data'));
+      $data = Shelfs::find($id);
+      return view('admin.rak_edit', compact('data'));
     }
 
     /**
@@ -92,13 +94,15 @@ class CategoriesController extends Controller
     public function update(Request $request, $id)
     {
       $this->validate($request,[
-        'name' => 'required',
+        'nomor' => 'required',
+        'kode' => 'required'
       ]);
 
       try{
         \DB::beginTransaction();
-        $data = Categories::find($id);
-        $data->name = $request->name;
+        $data = Shelfs::find($id);
+        $data->nomor = $request->nomor;
+        $data->kode = $request->kode;
         $data->save();
         \DB::commit();
         $request->session()->flash('message','Berhasil Update Data');
@@ -120,7 +124,7 @@ class CategoriesController extends Controller
      */
     public function destroy($id)
     {
-      $data = Categories::find($id);
+      $data = Shelfs::find($id);
       $data->delete();
       if($data) {
           Session::flash('message','Berhasil menghapus Data');
