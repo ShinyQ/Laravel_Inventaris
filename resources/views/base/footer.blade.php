@@ -28,7 +28,7 @@
 </div>
 <!-- Argon Scripts -->
 <!-- Core -->
-<script src="{{url('ssets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{url('assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
 <!-- Optional JS -->
 <script src="{{url('assets/vendor/chart.js/dist/Chart.min.js')}}"></script>
 <script src="{{url('assets/vendor/chart.js/dist/Chart.extension.js')}}"></script>

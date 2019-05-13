@@ -35,7 +35,7 @@
 </div>
 <div class="container-fluid mt--8">
     <div class="row">
-        <div class="col-md-6 mb-5 mb-xl-0">
+        <div class="col-md-12 mb-5 mb-xl-0">
             <div class="card shadow">
                 <div class="card-header border-0">
                     <div class="row align-items-center">
@@ -63,19 +63,20 @@
                       </div>
                       @endif
                         <div class="col">
-                            <h3 class="mb-0">Tambah Kategori Barang</h3><br />
-                            <form action="/kategori" method="POST">
+                            <h3 class="mb-0">Edit Kategori Barang</h3><br />
+                            <form action="/kategori/{{ $data->id }}/update" method="POST">
                               @csrf
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-username">Nama Kategori</label>
-                                            <input name="name" type="text" id="input-username" class="form-control form-control-alternative" placeholder="Username" >
+                                            <input value="{{ $data->name }}" name="name" type="text" id="input-username" class="form-control form-control-alternative" placeholder="Username" >
                                         </div>
                                     </div>
 
                                     <div class="col-lg-12 text-right">
-                                        <input type="submit" class="btn btn-primary  pull-right" value="+ Tambah Kategori" />
+                                        <a href="/kategori" class="btn btn-primary  pull-right">Kembali </a>
+                                        <input type="submit" class="btn btn-warning  pull-right" value="+ Edit Data Kategori" />
                                     </div>
                                 </div>
                             </form>
@@ -85,40 +86,5 @@
             </div>
         </div>
         <br />
-        <div class="col-md-6 mb-5 mb-xl-0">
-            <div class="card shadow">
-                <div class="card-header border-0">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <h3 class="mb-0">Page visits</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="table-responsive">
-                    <!-- Projects table -->
-                    <table class="table align-items-center table-flush">
-                        <thead class="thead-light">
-                            <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">Nama Kategori</th>
-                                <th scope="col">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                          @foreach ($category as $data)
-                            <tr>
-                                <th scope="row">{{ $counter++ }}</th>
-                                <td>{{ $data->name }}</td>
-                                <td>
-                                  <a class="btn btn-warning" href="/kategori/{{$data->id}}/edit">Edit</i></a>
-                  								<a class="btn btn-danger" href="kategori/{{$data->id}}/delete">Delete</i></a>
-                                </td>
-                            </tr>
-                          @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
     </div>
     @endsection

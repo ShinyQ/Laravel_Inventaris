@@ -14,7 +14,7 @@
   <link href="{{url('assets/vendor/nucleo/css/nucleo.css')}}" rel="stylesheet">
   <link href="{{url('assets/vendor/@fortawesome/fontawesome-free/css/all.min.css')}}" rel="stylesheet">
   <!-- Argon CSS -->
-  <link type="text/css" href="./assets/css/argon.css?v=1.0.0" rel="stylesheet">
+  <link type="text/css" href="{{url('assets/css/argon.css?v=1.0.0')}}" rel="stylesheet">
   <script src="{{url('assets/vendor/jquery/dist/jquery.min.js')}}"></script>
 </head>
 
