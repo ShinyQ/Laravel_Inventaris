@@ -55,6 +55,7 @@ class GoodsController extends Controller
               'stock' => 'required | numeric',
               'categories_id' => 'required',
               'shelfs_id' => 'required',
+              'foto' => 'image|mimes:jpeg,png,jpg,svg|max:2048'
           ]);
           $response = new Goods($request->except("_token"));
           $response->status = '1';

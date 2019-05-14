@@ -61,6 +61,7 @@ class GoodsController extends Controller
           'stock' => 'required | numeric',
           'categories_id' => 'required',
           'shelfs_id' => 'required',
+          'foto' => 'image|mimes:jpeg,png,jpg,svg|max:2048'
       ]);
 
       try{
@@ -129,6 +130,7 @@ class GoodsController extends Controller
           'stock' => 'required | numeric',
           'categories_id' => 'required',
           'shelfs_id' => 'required',
+          'foto' => 'image|mimes:jpeg,png,jpg,svg|max:2048'
       ]);
 
       try{

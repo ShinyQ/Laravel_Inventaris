@@ -17,7 +17,7 @@ class GoodsResource extends JsonResource
       return [
       'id' => $this->id,
       'name' => $this->name,
-      // 'gambar' => "http://localhost:2002/images/$this->image",
+      'foto' => "http://localhost:2002/images/$this->foto",
       'stock' => $this->stock,
       'kategori' => [
                      'id' => $this->categories_id,

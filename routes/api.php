@@ -26,6 +26,7 @@ Route::get('/logout', 'Auth\LoginController@logout');
   Route::prefix('v1')->group(function(){
     Route::apiResource("barang", "API\V1\GoodsController");
     Route::apiResource("kategori", "API\V1\CategoriesController");
+    Route::apiResource("peminjaman", "API\V1\PeminjamanController");
   });
 
 });

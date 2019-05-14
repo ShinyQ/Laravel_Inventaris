@@ -45,8 +45,8 @@ class PinjamController extends Controller
       $this->validate($request,[
           'goods_id' => 'required',
           'jumlah' => 'required | numeric',
-          'tanggal_pinjam' => 'required',
-          'tanggal_kembali' => 'required',
+          'tanggal_pinjam' => 'required | before:tanggal_kembali',
+          'tanggal_kembali' => 'required | after:tanggal_pinjam',
       ]);
 
       try {
