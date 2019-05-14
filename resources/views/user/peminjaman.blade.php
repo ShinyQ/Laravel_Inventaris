@@ -61,7 +61,7 @@
                         </div>
                       </div>
                       @endif
-                      
+
                         <div class="col">
                             <h3 class="mb-0">Tambah Data Barang</h3><br />
                             <form action="/pinjam" method="POST">
@@ -69,9 +69,9 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="form-control-label" for="input-username">Kategori Barang</label>
+                                            <label class="form-control-label" for="input-username">Pilih Barang</label>
                                             <select class="form-control form-control-alternative" name="goods_id">
-                              								<option value="">--Pilih Kategori--</option>
+                              								<option value="">--Pilih Barang--</option>
                               								@foreach($good as $item)
                               									<option value="{{$item->id}}">{{$item->name}}</option>
                               								@endforeach
@@ -88,14 +88,14 @@
 
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="form-control-label" for="input-username">Jumlah Pinjam</label>
+                                            <label class="form-control-label" for="input-username">Tanggal Pinjam</label>
                                             <input name="tanggal_pinjam" type="date" id="input-username" class="form-control form-control-alternative" placeholder="Jumlah Barang" >
                                         </div>
                                     </div>
 
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="form-control-label" for="input-username">Jumlah Pinjam</label>
+                                            <label class="form-control-label" for="input-username">Tanggal Kembali</label>
                                             <input name="tanggal_kembali" type="date" id="input-username" class="form-control form-control-alternative" placeholder="Jumlah Barang" >
                                         </div>
                                     </div>
@@ -141,17 +141,22 @@
                                 <th scope="row">{{ $counter++ }}</th>
                                 <td>{{ $data->goods->name }}</td>
                                 <td>{{ $data->jumlah }}</td>
-                                <td>{{ date("d-m-Y", strtotime($data->tanggal_pinjam)) }}</td>
-                                <td>{{ date("d-m-Y", strtotime($data->tanggal_kembali )) }}</td>
-                                <td>
-                                  @if($data->status = "Belum Dikonfirmasi")
-                                    <font color="#f4b042"><strong>{{ $data->status }}</strong></font>
+                                <td>{{ date("j F Y", strtotime($data->tanggal_pinjam)) }}</td>
+                                <td>{{ date("j F Y", strtotime($data->tanggal_kembali )) }}</td>
+                                  @if($data->status == "Belum Dikonfirmasi")
+                                    <td><font color="#f4b042"><strong>{{ $data->status }}</strong></font></td>
+                                    <td>
+                                      {{-- <a class="btn btn-warning" href="/pinjam/{{$data->id}}/edit">Edit</i></a> --}}
+                      								<a class="btn btn-danger" href="/pinjam/{{$data->id}}/delete">Batalkan</i></a>
+                                    </td>
+                                  @elseif($data->status == "Dikonfirmasi")
+                                    <td><font color="green"><strong>{{ $data->status }}</strong></font></td>
+                                    <td>Silahkan Mengambil Barang Di <br /> Ruang Inventaris</td>
+                                  @else
+                                    <td><font color="red"><strong>{{ $data->status }}</strong></font></td>
+                                    <td>Barang Sedang Tidak Tersedia</td>
                                   @endif
-                                </td>
-                                <td>
-                                  {{-- <a class="btn btn-warning" href="/pinjam/{{$data->id}}/edit">Edit</i></a> --}}
-                  								<a class="btn btn-danger" href="/pinjam/{{$data->id}}/delete">Batalkan</i></a>
-                                </td>
+
                             </tr>
                           @endforeach
                         </tbody>

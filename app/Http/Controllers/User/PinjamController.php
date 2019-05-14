@@ -19,8 +19,8 @@ class PinjamController extends Controller
     public function index()
     {
       $counter = 1;
-      $good = Goods::all();
-      $pinjam = Peminjaman::where('user_id', \Auth::user()->id)->get();
+      $good = \DB::table('goods')->orderBy('name', 'asc')->get();
+      $pinjam = Peminjaman::where('user_id', \Auth::user()->id)->orderBy('updated_at','desc')->get();
       return view('user.peminjaman', compact('pinjam','good', 'counter'));
     }
 
@@ -205,12 +205,13 @@ class PinjamController extends Controller
 
       $CheckBarang = Goods::where('id', $pinjam->goods_id)->first();
       $TambahStok = $CheckBarang->stock + $pinjam->jumlah;
+      $CheckBarang->stock = $TambahStok;
       $CheckBarang->save();
 
       $data = Peminjaman::find($id);
       $data->delete();
       if($data) {
-          Session::flash('message','Berhasil menghapus Data');
+          Session::flash('message','Berhasil menghapus request peminjaman');
       }
       return redirect()->back();
     }

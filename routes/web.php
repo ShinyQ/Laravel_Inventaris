@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Route::get('/test', 'Auth\RegisterController@test');
 
-Route::get('/login', 'Auth\LoginController@index');
+Route::get('/login', 'Auth\LoginController@index')->name('login');
 Route::get('/register', 'Auth\RegisterController@index');
 Route::get('/doLogout', 'Auth\LoginController@doLogout');
 Route::post('/doRegister', 'Auth\RegisterController@doRegister');
@@ -61,6 +61,12 @@ Route::middleware("auth")->group(function() {
     Route::post('/{id}/update','User\PinjamController@update');
     Route::get('/{id}/edit','User\PinjamController@edit');
     Route::get('/{id}/delete','User\PinjamController@destroy');
+  });
+
+  Route::prefix('peminjaman')->group(function(){
+    Route::get('/', 'Admin\PeminjamanController@index');
+    Route::get('/{id}/konfirmasi','Admin\PeminjamanController@konfirmasi');
+    Route::get('/{id}/tolak','Admin\PeminjamanController@tolak');
   });
 
 });

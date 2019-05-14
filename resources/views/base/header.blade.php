@@ -129,7 +129,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/peminjaman">
-              <i class="ni ni-basket text-purple"></i>Izin Peminjaman
+              <i class="ni ni-basket text-purple"></i>Izin Peminjaman &nbsp;<span class="badge badge-default" style="background-color:#5e72e4"><font color="white">{{ $jumlah }}</font></span>
             </a>
           </li>
           <li class="nav-item">
@@ -145,7 +145,12 @@
           @else
           <li class="nav-item">
             <a class="nav-link" href="/pinjam">
-              <i class="ni ni-basket text-purple"></i>Pinjam Barang
+              <i class="ni ni-basket text-purple"></i>Request Peminjaman
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/pinjam">
+              <i class="ni ni-planet text-red"></i>Barang Peminjaman
             </a>
           </li>
           <li class="nav-item">

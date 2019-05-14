@@ -16,16 +16,16 @@ class LoginController extends Controller
 {
 
   public function index(){
-   if (Auth::user()) {
-  		if(Auth::user()->role == "admin"){
-        return redirect('/kategori');
-      }
-      else{
-        return redirect('/pinjam');
-      }
-  	} else {
-  	   return view('auth.login');
-  	}
+       if(Auth::user()){
+         if(Auth::user()->role == "admin"){
+           return redirect('/kategori');
+         }else{
+           return redirect('/pinjam');
+         }
+       }
+       else{
+         return view('auth.login');
+       }
   }
 
   public function doLogin(Request $request){
@@ -39,15 +39,15 @@ class LoginController extends Controller
         'email' => $request->email,
         'password' => $request->password
       ])){
-        Session::flash('message_gagal', 'Username Atau password Salah');
-        return redirect()->back();
+          Session::flash('message_gagal', 'Username Atau password Salah');
+          return redirect()->back();
+      }elseif((Auth::user()->email_verified_at == null) && Auth::user()->role == "user"){
+          Session::flash('message_gagal', 'Anda Harus Verifikasi Email Dahulu');
+          Auth::logout();
+          return redirect()->back();
       }
       elseif(Auth::user()->role == "admin"){
           return redirect('/kategori');
-      }
-      elseif(Auth::user()->role == "user" && Auth::user()->email_verified_at == NULL){
-            Session::flash('message_gagal', 'Email Varus Dikonfirmasi Terlebih Dahulu');
-            return redirect('/login');
       }
       else{
           return redirect('/pinjam');
