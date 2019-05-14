@@ -110,6 +110,7 @@
                             <div class="col-lg-12 text-right">
                                 <a class="btn btn-primary" href="/barang">Kembali</a>
                             </div>
+                          </div>
                         </div>
                         </form>
                     </div>

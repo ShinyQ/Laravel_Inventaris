@@ -17,10 +17,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
 Route::post('/login', 'Auth\LoginController@login');
 Route::post('/register', 'Auth\RegisterController@register');
 Route::get('/logout', 'Auth\LoginController@logout');
 
-Route::prefix('v1')->group(function(){
-  Route::apiResource("barang", "API\V1\GoodsController");
+  Route::group(['middleware' => 'auth:api'], function () {
+
+  Route::prefix('v1')->group(function(){
+    Route::apiResource("barang", "API\V1\GoodsController");
+  });
+
 });

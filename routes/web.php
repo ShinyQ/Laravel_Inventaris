@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Route::get('/test', 'Auth\RegisterController@test');
 
-Route::get('/login', 'Auth\LoginController@index')->name('login');
+Route::get('/login', 'Auth\LoginController@index');
 Route::get('/register', 'Auth\RegisterController@index');
 Route::get('/doLogout', 'Auth\LoginController@doLogout');
 Route::post('/doRegister', 'Auth\RegisterController@doRegister');
@@ -39,6 +39,7 @@ Route::middleware("auth")->group(function() {
 
   Route::prefix('rak')->group(function(){
     Route::get('/', 'Admin\ShelfsController@index');
+    Route::get('/{id}/barang','Admin\ShelfsController@show');
     Route::post('/','Admin\ShelfsController@store');
     Route::post('/{id}/update','Admin\ShelfsController@update');
     Route::get('/{id}/edit','Admin\ShelfsController@edit');

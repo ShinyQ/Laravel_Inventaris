@@ -119,6 +119,7 @@
                                 <td>{{ $data->nomor }}</td>
                                 <td>{{ $data->kode }}</td>
                                 <td>
+                                  <a class="btn btn-primary" href="/rak/{{$data->id}}/barang">Data Barang</i></a>
                                   <a class="btn btn-warning" href="/rak/{{$data->id}}/edit">Edit</i></a>
                   								<a class="btn btn-danger" href="rak/{{$data->id}}/delete">Delete</i></a>
                                 </td>

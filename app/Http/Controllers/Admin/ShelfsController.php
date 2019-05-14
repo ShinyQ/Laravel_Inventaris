@@ -69,7 +69,9 @@ class ShelfsController extends Controller
      */
     public function show($id)
     {
-        //
+      $counter = 1;
+      $shelf = Shelfs::with('goods')->find($id);
+      return view('admin.rak_barang', compact('shelf','counter'));
     }
 
     /**
