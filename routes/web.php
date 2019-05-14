@@ -15,8 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test', 'Auth\RegisterController@test');
-
 Route::get('/login', 'Auth\LoginController@index')->name('login');
 Route::get('/register', 'Auth\RegisterController@index');
 Route::get('/doLogout', 'Auth\LoginController@doLogout');
@@ -67,6 +65,12 @@ Route::middleware("auth")->group(function() {
     Route::get('/', 'Admin\PeminjamanController@index');
     Route::get('/{id}/konfirmasi','Admin\PeminjamanController@konfirmasi');
     Route::get('/{id}/tolak','Admin\PeminjamanController@tolak');
+  });
+
+  Route::prefix('status')->group(function(){
+    Route::get('/', 'Admin\StatusController@index');
+    Route::get('/{id}/konfirmasi','Admin\PeminjamanController@konfirmasi');
+    Route::get('/{id}/hapus','Admin\PeminjamanController@hapus');
   });
 
 });

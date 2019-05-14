@@ -47,16 +47,15 @@ class LoginController extends Controller
           return redirect()->back();
       }
       elseif(Auth::user()->role == "admin"){
+          Session::flash('message', 'Halo Admin Selamat Datang !');
           return redirect('/kategori');
       }
       else{
+        Session::flash('message', 'Halo Penguna Selamat Datang !');
           return redirect('/pinjam');
       }
 
    }
-
-
-
 
   public function login(Request $request)
   {
