@@ -159,7 +159,7 @@
                                   @endif
                                 </td>
                                 <td>{{ $data->name }}</td>
-                                <td>Rak {{ $data->shelfs->nomor }} Kode {{ $data->shelfs->kode }}</td>
+                                <td>Rak {{ $data->shelfs->nomor ?? '-' }} - Kode {{ $data->shelfs->kode ?? '-' }}</td>
                                 <td>{{ $data->stock }}</td>
                                 {{-- <td>
                                   @if($data->status == 1)

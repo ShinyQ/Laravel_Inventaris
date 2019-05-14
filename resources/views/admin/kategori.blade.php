@@ -118,6 +118,11 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="col-md-12" style="margin:0; text-align:center;">
+              <center>
+                  {!! $category->appends(request()->all())->links() !!}
+              </center>
+              </div>
             </div>
         </div>
     </div>

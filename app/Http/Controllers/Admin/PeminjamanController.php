@@ -17,7 +17,7 @@ class PeminjamanController extends Controller
     public function index()
     {
       $counter = 1;
-      $pinjam = Peminjaman::where('status','Belum Dikonfirmasi')->orderBy('updated_at','desc')->get();
+      $pinjam = Peminjaman::withTrashed()->where('status','Belum Dikonfirmasi')->orderBy('updated_at','desc')->get();
       return view('admin.peminjaman', compact('pinjam','counter'));
     }
 

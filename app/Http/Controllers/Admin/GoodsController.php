@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Goods;
 use App\Shelfs;
 use App\Categories;
-use Sessions;
+use Session;
 
 class GoodsController extends Controller
 {

@@ -10,8 +10,8 @@ use App\Shelfs;
 
 class Peminjaman extends Model
 {
-    protected $table = 'peminjaman';
     use SoftDeletes;
+    protected $table = 'peminjaman';
     public $timestamps = true;
     protected $fillable = ['user_id','goods_id','jumlah','tanggal_pinjam','tanggal_kembali', 'status'];
 

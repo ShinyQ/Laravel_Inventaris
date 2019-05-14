@@ -139,8 +139,8 @@
                           @foreach ($pinjam as $data)
                             <tr>
                                 <th scope="row">{{ $counter++ }}</th>
-                                <td>{{ $data->goods->name }}</td>
-                                <td>{{ $data->jumlah }}</td>
+                                <td>{{ $data->goods->name ?? '-' }}</td>
+                                <td>{{ $data->jumlah ?? '-' }}</td>
                                 <td>{{ date("j F Y", strtotime($data->tanggal_pinjam)) }}</td>
                                 <td>{{ date("j F Y", strtotime($data->tanggal_kembali )) }}</td>
                                   @if($data->status == "Belum Dikonfirmasi")

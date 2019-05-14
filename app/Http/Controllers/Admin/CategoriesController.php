@@ -18,7 +18,18 @@ class CategoriesController extends Controller
     public function index()
     {
         $counter = 1;
-        $category = Categories::all();
+        $category = Categories::query()->latest();
+        if (request()->has("search") && strlen(request()->query("search")) >= 1) {
+          $category->where(
+            "categories.name", "like", "%" . request()->query("search") . "%"
+          );
+        }
+
+        $pagination = 3;
+        $category = $category->paginate($pagination);
+        if( request()->has('page') && request()->get('page') > 1){
+          $counter += (request()->get('page')- 1) * $pagination;
+        }
         return view('admin.kategori', compact('category','counter'));
     }
 
