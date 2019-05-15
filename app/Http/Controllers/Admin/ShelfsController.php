@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Shelfs;
 use Session;
+use App\Http\Requests\ShelfsValidation;
+
 class ShelfsController extends Controller
 {
     /**
@@ -36,13 +38,8 @@ class ShelfsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ShelfsValidation $request)
     {
-      $this->validate($request,[
-          'nomor' => 'required',
-          'kode' => 'required | unique:shelfs',
-      ]);
-
       try{
           $data = new Shelfs;
           $data->nomor = $request->nomor;
@@ -92,7 +89,7 @@ class ShelfsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ShelfsValidation $request, $id)
     {
       $this->validate($request,[
         'nomor' => 'required',

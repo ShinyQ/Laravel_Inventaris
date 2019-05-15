@@ -14,6 +14,7 @@ use App\Mail\VerifyMail;
 use Mail;
 use Auth;
 use Validator;
+use App\Http\Requests\RegisterValidation;
 
 class RegisterController extends Controller
 {
@@ -30,13 +31,8 @@ class RegisterController extends Controller
       return view('auth.verifyUser');
     }
 
-    public function doRegister(Request $request)
+    public function doRegister(RegisterValidation $request)
     {
-      $this->validate($request, [
-        'name' => 'required',
-        'email' => 'required|email',
-        'password' => 'required',
-      ]);
 
       $user = User::create([
         'name' => $request->name,

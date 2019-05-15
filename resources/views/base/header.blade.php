@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
-  <title>Argon Dashboard - Free Dashboard for Bootstrap 4</title>
+  <title>GoMa Dashboard</title>
   <!-- Favicon -->
   <link href="{{url('assets/img/brand/favicon.png')}}" rel="icon" type="image/png">
 
@@ -27,7 +27,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <!-- Brand -->
-      <a class="navbar-brand pt-0" href="./index.html">
+      <a class="navbar-brand pt-0" href="#">
         <img src="{{url('assets/img/brand/blue.png')}}" class="navbar-brand-img" alt="...">
       </a>
       <!-- User -->

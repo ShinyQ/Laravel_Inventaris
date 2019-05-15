@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Categories;
 use Validator;
 use Session;
+use App\Http\Requests\CategoriesValidation;
 
 class CategoriesController extends Controller
 {
@@ -49,12 +50,8 @@ class CategoriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoriesValidation $request)
     {
-      $this->validate($request,[
-          'name' => 'required | unique:categories',
-      ]);
-
       try{
           $data = new Categories;
           $data->name = $request->name;
@@ -100,12 +97,8 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoriesValidation $request, $id)
     {
-      $this->validate($request,[
-        'name' => 'required',
-      ]);
-
       try{
         \DB::beginTransaction();
         $data = Categories::find($id);

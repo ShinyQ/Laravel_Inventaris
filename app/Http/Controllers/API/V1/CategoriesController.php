@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
 use Exception;
 use ApiBuilder;
+use App\Http\Requests\CategoriesValidation;
 
 class CategoriesController extends Controller
 {
@@ -50,13 +51,9 @@ class CategoriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoriesValidation $request)
     {
       try{
-          $this->validate($request,[
-              'name' => 'required | unique:categories',
-          ]);
-
           $response = new Categories;
           $response->name = $request->name;
           $response->save();
@@ -96,12 +93,8 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoriesValidation $request, $id)
     {
-      $this->validate($request,[
-        'name' => 'required',
-      ]);
-
       try{
         \DB::beginTransaction();
         $response = Categories::findOrFail($id);

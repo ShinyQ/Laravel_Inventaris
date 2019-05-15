@@ -9,6 +9,7 @@ use App\Goods;
 use App\Peminjaman;
 use Session;
 use Carbon\Carbon;
+use App\Http\Requests\PeminjamanValidation;
 
 class PinjamController extends Controller
 {
@@ -41,15 +42,8 @@ class PinjamController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PeminjamanValidation $request)
     {
-      $this->validate($request,[
-          'goods_id' => 'required',
-          'jumlah' => 'required | numeric',
-          'tanggal_pinjam' => 'required | before:tanggal_kembali',
-          'tanggal_kembali' => 'required | after:tanggal_pinjam',
-      ]);
-
       try {
         $now = Carbon::today();
 
@@ -127,15 +121,8 @@ class PinjamController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PeminjamanValidation $request, $id)
     {
-      $this->validate($request,[
-          'goods_id' => 'required',
-          'jumlah' => 'required | numeric',
-          'tanggal_pinjam' => 'required',
-          'tanggal_kembali' => 'required',
-      ]);
-
       try {
         $CheckBarang = Goods::where('id', $request->goods_id)->first();
         $CheckStok = $CheckBarang->stock - $request->jumlah;

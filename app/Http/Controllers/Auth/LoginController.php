@@ -11,6 +11,7 @@ use Session;
 use Hash;
 use Bcrypt;
 use App\User;
+use App\Http\Requests\LoginValidation;
 
 class LoginController extends Controller
 {
@@ -28,12 +29,7 @@ class LoginController extends Controller
        }
   }
 
-  public function doLogin(Request $request){
-
-      $this->validate($request, [
-        'email' => 'required|email',
-        'password' => 'required',
-      ]);
+  public function doLogin(LoginValidation $request){
 
       if(!Auth::attempt([
         'email' => $request->email,

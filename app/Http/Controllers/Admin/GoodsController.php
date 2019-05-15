@@ -8,6 +8,7 @@ use App\Goods;
 use App\Shelfs;
 use App\Categories;
 use Session;
+use App\Http\Requests\GoodsValidation;
 
 class GoodsController extends Controller
 {
@@ -54,16 +55,8 @@ class GoodsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(GoodsValidation $request)
     {
-      $this->validate($request,[
-          'name' => 'required | unique:goods',
-          'stock' => 'required | numeric',
-          'categories_id' => 'required',
-          'shelfs_id' => 'required',
-          'foto' => 'image|mimes:jpeg,png,jpg,svg|max:2048'
-      ]);
-
       try{
           if($request->foto){
             $good = new Goods($request->except("_token"));
@@ -123,16 +116,8 @@ class GoodsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(GoodsValidation $request, $id)
     {
-      $this->validate($request,[
-          'name' => 'required',
-          'stock' => 'required | numeric',
-          'categories_id' => 'required',
-          'shelfs_id' => 'required',
-          'foto' => 'image|mimes:jpeg,png,jpg,svg|max:2048'
-      ]);
-
       try{
         \DB::beginTransaction();
         $data = Goods::find($id);

@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
 use Exception;
 use ApiBuilder;
+use App\Http\Requests\GoodsValidation;
 
 class GoodsController extends Controller
 {
@@ -47,16 +48,9 @@ class GoodsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(GoodsValidation $request)
     {
       try{
-          $this->validate($request,[
-              'name' => 'required | unique:goods',
-              'stock' => 'required | numeric',
-              'categories_id' => 'required',
-              'shelfs_id' => 'required',
-              'foto' => 'image|mimes:jpeg,png,jpg,svg|max:2048'
-          ]);
           $response = new Goods($request->except("_token"));
           $response->status = '1';
           $response->save();

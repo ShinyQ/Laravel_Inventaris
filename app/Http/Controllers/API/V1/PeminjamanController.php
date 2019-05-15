@@ -12,6 +12,7 @@ use App\Peminjaman;
 use App\Goods;
 use App\Http\Resources\PeminjamanCollection;
 use App\Http\Resources\PeminjamanResource;
+use App\Http\Requests\PeminjamanValidation;
 
 class PeminjamanController extends Controller
 {
@@ -60,16 +61,9 @@ class PeminjamanController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PeminjamanValidation $request)
     {
       try {
-        $this->validate($request,[
-            'goods_id' => 'required',
-            'jumlah' => 'required | numeric',
-            'tanggal_pinjam' => 'required | before:tanggal_kembali',
-            'tanggal_kembali' => 'required | after:tanggal_pinjam',
-        ]);
-
         $CheckBarang = Goods::where('id', $request->goods_id)->first();
         $CheckStok = $CheckBarang->stock - $request->jumlah;
         // dd($CheckStock);
@@ -99,7 +93,6 @@ class PeminjamanController extends Controller
           $message = "Jumlah Yang Dimasukkan Melebihi Stok Barang";
           $response = [];
         }
-
       } catch (\Exception $e) {
         if ($e instanceof ValidationException) {
               $code = 422;
