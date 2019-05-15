@@ -44,7 +44,17 @@ class PeminjamanController extends Controller
       $pinjam->status = "Ditolak";
       $pinjam->save();
 
-      request()->session()->flash('message','Berhasil Mengnolak Peminjaman');
+      request()->session()->flash('message','Berhasil Menolak Peminjaman');
+      return redirect()->back();
+    }
+
+    public function konfirmasi_terima($id)
+    {
+      $pinjam = Peminjaman::find($id);
+      $pinjam->status = "Sudah Dikembalikan";
+      $pinjam->save();
+
+      request()->session()->flash('message','Berhasil Mengkonfirmasi Peminjaman');
       return redirect()->back();
     }
 }

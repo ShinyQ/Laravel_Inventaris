@@ -69,8 +69,9 @@ Route::middleware("auth")->group(function() {
 
   Route::prefix('status')->group(function(){
     Route::get('/', 'Admin\StatusController@index');
-    Route::get('/{id}/konfirmasi','Admin\PeminjamanController@konfirmasi');
-    Route::get('/{id}/hapus','Admin\PeminjamanController@hapus');
+    Route::get('/{id}/konfirmasi_terima','Admin\PeminjamanController@konfirmasi_terima');
   });
+
+  Route::get('status_pinjam', 'User\StatusController@index');
 
 });

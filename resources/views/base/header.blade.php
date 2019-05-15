@@ -148,16 +148,11 @@
               <i class="ni ni-basket text-purple"></i>Request Peminjaman
             </a>
           </li>
-          {{-- <li class="nav-item">
-            <a class="nav-link" href="/pinjam">
-              <i class="ni ni-planet text-red"></i>Barang Peminjaman
+          <li class="nav-item">
+            <a class="nav-link" href="/status_pinjam">
+              <i class="ni ni-planet text-red"></i>Status Barang Peminjaman
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/status">
-              <i class="ni ni-single-02 text-yellow"></i>Histori Peminjaman
-            </a>
-          </li> --}}
           <li class="nav-item">
             <a class="nav-link" href="/doLogout">
               <i class="ni ni-curved-next text-pink"></i>Logout
