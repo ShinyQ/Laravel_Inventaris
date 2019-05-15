@@ -53,14 +53,14 @@ class PinjamController extends Controller
         }
 
         else{
-          $CheckBarang = Goods::where('id', $request->goods_id)->first();
-          $CheckStok = $CheckBarang->stock - $request->jumlah;
+          $StockBarang = Goods::where('id', $request->goods_id)->first();
+          $CheckStok = $StockBarang->stock - $request->jumlah;
           // dd($CheckStock);
           if($CheckStok >= 0){
             // $CheckPinjaman = Peminjaman::where('user_id', \Auth::user()->id)->where('goods_id', $request->goods_id)->first();
-            $KurangiStok = $CheckBarang->stock - $request->jumlah;
-            $CheckBarang->stock = $KurangiStok;
-            $CheckBarang->save();
+            $KurangiStok = $StockBarang->stock - $request->jumlah;
+            $StockBarang->stock = $KurangiStok;
+            $StockBarang->save();
 
             $pinjam = new Peminjaman($request->except("_token"));
             $pinjam->status = 'Belum Dikonfirmasi';
@@ -124,32 +124,19 @@ class PinjamController extends Controller
     public function update(PeminjamanValidation $request, $id)
     {
       try {
-        $CheckBarang = Goods::where('id', $request->goods_id)->first();
-        $CheckStok = $CheckBarang->stock - $request->jumlah;
-        $CheckStokSekarang = Goods::findOrFail($request->goods_id);
+        $StockBarang = Goods::where('id', $request->goods_id)->first();
+        $CheckJumlahPinjam = Peminjaman::findOrFail($id);
 
-        if($CheckStok >= 0){
-          // $CheckPinjaman = Peminjaman::where('user_id', \Auth::user()->id)->where('goods_id', $request->goods_id)->first();
-          if($CheckStokSekarang->stock > $request->jumlah){
-            $TambahiStok = $CheckStokSekarang->stock - $request->jumlah;
-            $CheckBarang->stock = $CheckStokSekarang - $TambahiStok;
+        // dd($StockBarang);
+        // dd($CheckJumlahPinjam->jumlah);
+        // dd($request->jumlah);
 
-            $CheckBarang->save();
-
-            $pinjam = Peminjaman::find($id);
-            $pinjam->tanggal_kembali = $request->tanggal_kembali;
-            $pinjam->tanggal_pinjam = $request->tanggal_pinjam;
-            $pinjam->jumlah = $request->jumlah;
-            $pinjam->goods_id = $request->goods_id;
-            $pinjam->save();
-            $request->session()->flash('message','Berhasil Mengubah Data');
-                      return redirect()->back();
-          }
-
-          elseif($CheckStokSekarang->stock < $request->jumlah){
-            $KurangiStok = $request->jumlah - $CheckStokSekarang->stock;
-            $CheckBarang->stock = $CheckBarang->stock - $TambahiStok;
-            $CheckBarang->save();
+          if($CheckJumlahPinjam->jumlah < $request->jumlah){
+            $KurangiQuota =  $request->jumlah - $CheckJumlahPinjam->jumlah;
+            // dd($KurangiQuota);
+            $Barang = Goods::find($request->goods_id);
+            $Barang->stock =  $Barang->stock - $KurangiQuota;
+            $Barang->save();
 
             $pinjam = Peminjaman::find($id);
             $pinjam->tanggal_kembali = $request->tanggal_kembali;
@@ -157,9 +144,35 @@ class PinjamController extends Controller
             $pinjam->jumlah = $request->jumlah;
             $pinjam->goods_id = $request->goods_id;
             $pinjam->save();
-            $request->session()->flash('message','Berhasil Mengubah Data');
+            $request->session()->flash('message','Berhasil Mengubah Data Dan Mengurangi Barang');
                       return redirect()->back();
           }
+
+          elseif($CheckJumlahPinjam->jumlah > $request->jumlah){
+            $checkquota = $StockBarang->stock - $request->jumlah;
+            // dd($checkquota);
+            if($checkquota <= 0){
+              $request->session()->flash('message_gagal','quota tidak mencukupi');
+              return redirect()->back();
+            }
+            else{
+            // dd("Checkpoint");
+            $TambahQuota = $CheckJumlahPinjam->jumlah - $request->jumlah;
+            $Barang = Goods::find($request->goods_id);
+            $Barang->stock = $Barang->stock + $TambahQuota;
+            $Barang->save();
+
+            $pinjam = Peminjaman::find($id);
+            $pinjam->tanggal_kembali = $request->tanggal_kembali;
+            $pinjam->tanggal_pinjam = $request->tanggal_pinjam;
+            $pinjam->jumlah = $request->jumlah;
+            $pinjam->goods_id = $request->goods_id;
+            $pinjam->save();
+            $request->session()->flash('message','Berhasil Mengubah Data Dan Menambah Barang');
+                      return redirect()->back();
+            }
+          }
+
           else{
             $pinjam = Peminjaman::find($id);
             $pinjam->tanggal_kembali = $request->tanggal_kembali;
@@ -170,18 +183,6 @@ class PinjamController extends Controller
             $request->session()->flash('message','Berhasil Mengubah Data');
             return redirect()->back();
           }
-
-        }
-
-        elseif($CheckStok = 0){
-          $request->session()->flash('message_gagal','Stock Barang Sudah Habis');
-          return redirect()->back();
-        }
-
-        else{
-          $request->session()->flash('message_gagal','Jumlah Yang Dimasukkan Melebihi Stok Barang');
-          return redirect()->back();
-        }
 
       } catch (\Exception $e) {
         $request->session()->flash('message_gagal','Gagal Mengubah Data');
@@ -199,10 +200,10 @@ class PinjamController extends Controller
     {
       $pinjam = Peminjaman::where('id', $id)->first();
 
-      $CheckBarang = Goods::where('id', $pinjam->goods_id)->first();
-      $TambahStok = $CheckBarang->stock + $pinjam->jumlah;
-      $CheckBarang->stock = $TambahStok;
-      $CheckBarang->save();
+      $StockBarang = Goods::where('id', $pinjam->goods_id)->first();
+      $TambahStok = $StockBarang->stock + $pinjam->jumlah;
+      $StockBarang->stock = $TambahStok;
+      $StockBarang->save();
 
       $data = Peminjaman::find($id);
       $data->delete();

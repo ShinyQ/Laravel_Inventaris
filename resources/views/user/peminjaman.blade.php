@@ -146,7 +146,7 @@
                                   @if($data->status == "Belum Dikonfirmasi")
                                     <td><font color="#f4b042"><strong>{{ $data->status }}</strong></font></td>
                                     <td>
-                                      {{-- <a class="btn btn-warning" href="/pinjam/{{$data->id}}/edit">Edit</i></a> --}}
+                                      <a class="btn btn-warning" href="/pinjam/{{$data->id}}/edit">Edit</i></a>
                       								<a class="btn btn-danger" href="/pinjam/{{$data->id}}/delete">Batalkan</i></a>
                                     </td>
                                   @elseif($data->status == "Dikonfirmasi" || $data->status == "Sudah Dikembalikan")

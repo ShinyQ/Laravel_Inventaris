@@ -70,7 +70,7 @@
                                   <div class="col-lg-6">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-username">Pilih Barang</label>
-                                            <select id="barang" class="form-control form-control-alternative" name="goods_id">
+                                            <select  id="barang" class="form-control form-control-alternative" name="goods_id">
                                               <option value="">--Pilih Kategori--</option>
                                               @foreach($good as $item)
                                                 <option value="{{$item->id}}">{{$item->name}}</option>
