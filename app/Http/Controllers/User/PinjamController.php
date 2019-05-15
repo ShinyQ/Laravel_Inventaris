@@ -130,59 +130,65 @@ class PinjamController extends Controller
         // dd($StockBarang);
         // dd($CheckJumlahPinjam->jumlah);
         // dd($request->jumlah);
-
-          if($CheckJumlahPinjam->jumlah < $request->jumlah){
-            $KurangiQuota =  $request->jumlah - $CheckJumlahPinjam->jumlah;
-            // dd($KurangiQuota);
-            $Barang = Goods::find($request->goods_id);
-            $Barang->stock =  $Barang->stock - $KurangiQuota;
-            $Barang->save();
-
-            $pinjam = Peminjaman::find($id);
-            $pinjam->tanggal_kembali = $request->tanggal_kembali;
-            $pinjam->tanggal_pinjam = $request->tanggal_pinjam;
-            $pinjam->jumlah = $request->jumlah;
-            $pinjam->goods_id = $request->goods_id;
-            $pinjam->save();
-            $request->session()->flash('message','Berhasil Mengubah Data Dan Mengurangi Barang');
-                      return redirect()->back();
-          }
-
-          elseif($CheckJumlahPinjam->jumlah > $request->jumlah){
-            $checkquota = $StockBarang->stock - $request->jumlah;
-            // dd($checkquota);
-            if($checkquota <= 0){
-              $request->session()->flash('message_gagal','quota tidak mencukupi');
-              return redirect()->back();
-            }
-            else{
-            // dd("Checkpoint");
-            $TambahQuota = $CheckJumlahPinjam->jumlah - $request->jumlah;
-            $Barang = Goods::find($request->goods_id);
-            $Barang->stock = $Barang->stock + $TambahQuota;
-            $Barang->save();
-
-            $pinjam = Peminjaman::find($id);
-            $pinjam->tanggal_kembali = $request->tanggal_kembali;
-            $pinjam->tanggal_pinjam = $request->tanggal_pinjam;
-            $pinjam->jumlah = $request->jumlah;
-            $pinjam->goods_id = $request->goods_id;
-            $pinjam->save();
-            $request->session()->flash('message','Berhasil Mengubah Data Dan Menambah Barang');
-                      return redirect()->back();
-            }
-          }
-
-          else{
-            $pinjam = Peminjaman::find($id);
-            $pinjam->tanggal_kembali = $request->tanggal_kembali;
-            $pinjam->tanggal_pinjam = $request->tanggal_pinjam;
-            $pinjam->jumlah = $request->jumlah;
-            $pinjam->goods_id = $request->goods_id;
-            $pinjam->save();
-            $request->session()->flash('message','Berhasil Mengubah Data');
+          if($StockBarang->stock - $request->jumlah <= 0){
+            $request->session()->flash('message_gagal','Stok Tidak Mencukupi');
             return redirect()->back();
           }
+          else{
+            if($CheckJumlahPinjam->jumlah < $request->jumlah){
+              $KurangiQuota =  $request->jumlah - $CheckJumlahPinjam->jumlah;
+              // dd($KurangiQuota);
+              $Barang = Goods::find($request->goods_id);
+              $Barang->stock =  $Barang->stock - $KurangiQuota;
+              $Barang->save();
+
+              $pinjam = Peminjaman::find($id);
+              $pinjam->tanggal_kembali = $request->tanggal_kembali;
+              $pinjam->tanggal_pinjam = $request->tanggal_pinjam;
+              $pinjam->jumlah = $request->jumlah;
+              $pinjam->goods_id = $request->goods_id;
+              $pinjam->save();
+              $request->session()->flash('message','Berhasil Mengubah Data Dan Mengurangi Barang');
+              return redirect()->back();
+            }
+
+            elseif($CheckJumlahPinjam->jumlah > $request->jumlah){
+              $checkquota = $StockBarang->stock - $request->jumlah;
+              // dd($checkquota);
+              if($checkquota <= 0){
+                $request->session()->flash('message_gagal','quota tidak mencukupi');
+                return redirect()->back();
+              }
+              else{
+              // dd("Checkpoint");
+              $TambahQuota = $CheckJumlahPinjam->jumlah - $request->jumlah;
+              $Barang = Goods::find($request->goods_id);
+              $Barang->stock = $Barang->stock + $TambahQuota;
+              $Barang->save();
+
+              $pinjam = Peminjaman::find($id);
+              $pinjam->tanggal_kembali = $request->tanggal_kembali;
+              $pinjam->tanggal_pinjam = $request->tanggal_pinjam;
+              $pinjam->jumlah = $request->jumlah;
+              $pinjam->goods_id = $request->goods_id;
+              $pinjam->save();
+              $request->session()->flash('message','Berhasil Mengubah Data Dan Menambah Barang');
+                        return redirect()->back();
+              }
+            }
+
+            else{
+              $pinjam = Peminjaman::find($id);
+              $pinjam->tanggal_kembali = $request->tanggal_kembali;
+              $pinjam->tanggal_pinjam = $request->tanggal_pinjam;
+              $pinjam->jumlah = $request->jumlah;
+              $pinjam->goods_id = $request->goods_id;
+              $pinjam->save();
+              $request->session()->flash('message','Berhasil Mengubah Data');
+              return redirect()->back();
+            }
+          }
+
 
       } catch (\Exception $e) {
         $request->session()->flash('message_gagal','Gagal Mengubah Data');
