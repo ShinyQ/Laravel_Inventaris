@@ -138,6 +138,11 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="/histori">
+              <i class="ni ni-planet text-green"></i>Histori Peminjaman
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="/doLogout">
               <i class="ni ni-curved-next text-pink"></i> Logout
             </a>

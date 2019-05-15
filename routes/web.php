@@ -72,6 +72,7 @@ Route::middleware("auth")->group(function() {
     Route::get('/{id}/konfirmasi_terima','Admin\PeminjamanController@konfirmasi_terima');
   });
 
+  Route::get('histori', 'Admin\HistoriController@index');
   Route::get('status_pinjam', 'User\StatusController@index');
 
 });

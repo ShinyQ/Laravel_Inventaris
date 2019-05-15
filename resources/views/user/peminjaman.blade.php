@@ -6,7 +6,7 @@
 <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
     <div class="container-fluid">
         <!-- Brand -->
-        <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="./index.html">Halaman Rak</a>
+        <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="#">Halaman Request Peminjaman</a>
         <!-- Form -->
         <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
             <div class="form-group mb-0">
@@ -149,8 +149,8 @@
                                       {{-- <a class="btn btn-warning" href="/pinjam/{{$data->id}}/edit">Edit</i></a> --}}
                       								<a class="btn btn-danger" href="/pinjam/{{$data->id}}/delete">Batalkan</i></a>
                                     </td>
-                                  @elseif($data->status == "Dikonfirmasi")
-                                    <td><font color="green"><strong>{{ $data->status }}</strong></font></td>
+                                  @elseif($data->status == "Dikonfirmasi" || $data->status == "Sudah Dikembalikan")
+                                    <td><font color="green"><strong>Dikonfirmasi</strong></font></td>
                                     <td>Silahkan Mengambil Barang Di <br /> Ruang Inventaris</td>
                                   @else
                                     <td><font color="red"><strong>{{ $data->status }}</strong></font></td>
