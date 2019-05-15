@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Shelfs;
 use Session;
-
 class ShelfsController extends Controller
 {
     /**

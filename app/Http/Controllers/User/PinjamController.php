@@ -8,6 +8,7 @@ use App\Categories;
 use App\Goods;
 use App\Peminjaman;
 use Session;
+use Carbon\Carbon;
 
 class PinjamController extends Controller
 {
@@ -50,32 +51,40 @@ class PinjamController extends Controller
       ]);
 
       try {
-        $CheckBarang = Goods::where('id', $request->goods_id)->first();
-        $CheckStok = $CheckBarang->stock - $request->jumlah;
-        // dd($CheckStock);
-        if($CheckStok >= 0){
-          // $CheckPinjaman = Peminjaman::where('user_id', \Auth::user()->id)->where('goods_id', $request->goods_id)->first();
-          $KurangiStok = $CheckBarang->stock - $request->jumlah;
-          $CheckBarang->stock = $KurangiStok;
-          $CheckBarang->save();
+        $now = Carbon::today();
 
-          $pinjam = new Peminjaman($request->except("_token"));
-          $pinjam->status = 'Belum Dikonfirmasi';
-          $pinjam->user_id = \Auth::user()->id;
-          $pinjam->save();
-          $request->session()->flash('message','Berhasil Menambahkan Data');
-        }
-
-        elseif($CheckStok = 0){
-          $request->session()->flash('message_gagal','Stock Barang Sudah Habis');
+        if($request->tanggal_pinjam < $now){
+          $request->session()->flash('message_gagal','Tanggal Awal Sudah Lewat');
           return redirect()->back();
         }
 
         else{
-          $request->session()->flash('message_gagal','Jumlah Yang Dimasukkan Melebihi Stok Barang');
-          return redirect()->back();
-        }
+          $CheckBarang = Goods::where('id', $request->goods_id)->first();
+          $CheckStok = $CheckBarang->stock - $request->jumlah;
+          // dd($CheckStock);
+          if($CheckStok >= 0){
+            // $CheckPinjaman = Peminjaman::where('user_id', \Auth::user()->id)->where('goods_id', $request->goods_id)->first();
+            $KurangiStok = $CheckBarang->stock - $request->jumlah;
+            $CheckBarang->stock = $KurangiStok;
+            $CheckBarang->save();
 
+            $pinjam = new Peminjaman($request->except("_token"));
+            $pinjam->status = 'Belum Dikonfirmasi';
+            $pinjam->user_id = \Auth::user()->id;
+            $pinjam->save();
+            $request->session()->flash('message','Berhasil Menambahkan Data');
+          }
+
+          elseif($CheckStok = 0){
+            $request->session()->flash('message_gagal','Stock Barang Sudah Habis');
+            return redirect()->back();
+          }
+
+          else{
+            $request->session()->flash('message_gagal','Jumlah Yang Dimasukkan Melebihi Stok Barang');
+            return redirect()->back();
+          }
+        }
         return redirect()->back();
       } catch (\Exception $e) {
         $request->session()->flash('message_gagal','Data Peminjaman Gagal Ditambahkan');

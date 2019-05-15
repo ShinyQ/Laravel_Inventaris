@@ -33,6 +33,11 @@ class PeminjamanController extends Controller
           //     "peminjaman.name", "like", "%" . request()->query("search") . "%"
           //   );
           // }
+          if (request()->has("status") && strlen(request()->query("status")) >= 1) {
+            $response->where(
+              "peminjaman.status", request()->query("status")
+            );
+          }
 
           $pagination = 5;
           $response = $response->paginate($pagination);

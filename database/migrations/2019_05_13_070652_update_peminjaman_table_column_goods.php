@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateBarangTable extends Migration
+class UpdatePeminjamanTableColumnGoods extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class UpdateBarangTable extends Migration
      */
     public function up()
     {
-      Schema::table('goods', function (Blueprint $table) {
-        $table->string('foto')->nullable()->change();
+      Schema::table('peminjaman', function (Blueprint $table) {
+        $table->integer('goods_id')->after('user_id');
       });
     }
 
