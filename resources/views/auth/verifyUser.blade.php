@@ -10,7 +10,6 @@
       <div class="card">
         <div class="card-body">
           <center>
-            <img src="{{url('assets/img/brand/blue.png')}}" width="200px;"/><br /><br />
             <h2>Hello, {{$user['name']}}</h2>
             <br/>
             Alamat Email Kamu : {{$user['email']}}, Telah Berhasil Diregistrasi, <br /> Klik Link Dibawah Untuk Melakukan Konfirmasi
